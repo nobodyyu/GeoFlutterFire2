@@ -23,13 +23,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  GoogleMapController _mapController;
-  TextEditingController _latitudeController, _longitudeController;
+  late GoogleMapController _mapController;
+  late TextEditingController _latitudeController, _longitudeController;
 
   // firestore init
   final _firestore = FirebaseFirestore.instance;
-  GeoFlutterFire geo;
-  Stream<List<DocumentSnapshot>> stream;
+  late GeoFlutterFire geo;
+  late Stream<List<DocumentSnapshot>> stream;
   final radius = BehaviorSubject<double>.seeded(1.0);
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
 
@@ -246,8 +246,8 @@ class _MyAppState extends State<MyApp> {
 
   void _updateMarkers(List<DocumentSnapshot> documentList) {
     documentList.forEach((DocumentSnapshot document) {
-      Map<String, dynamic> snapData = document.data();
-      final GeoPoint point = snapData['position']['geopoint'];
+      Map<String, dynamic>? snapData = document.data() as Map<String, dynamic>?;
+      final GeoPoint point = snapData?['position']['geopoint'];
       _addMarker(point.latitude, point.longitude);
     });
   }
